@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NoteBook</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/marked"></script>
+<script src="https://unpkg.com/moment"></script>
+    <div id="notebook" class="clearfix">
+        <!-- 侧边栏 note list -->
+        <aside class="side-bar fl">
+            <div class="toolbar">
+                <button @click='addNote' :title="notes.length + ' note(s) already'"> + Add note</button>
+            </div>
+            <div class="note-list">
+                <div v-for="note in notes" @click="selectNote(note)">
+                    <span>{{note.title}}</span>
+                </div>
+            </div>
+        </aside>
+        <!-- 主面板 -->
+        <section class="main fl">
+            <template v-if="selectedNote">
+                <textarea class="inputView" v-model="selectedNote.content"></textarea>
+                <aside class="preView" v-html="notePreview"></aside>
+            </template>
+        </section>
+    </div>
+    <script>
+        new Vue({
+            name: 'notebook',
+            el: '#notebook',
+            data(){
+                return {
+                    notes: [],
+                    selectedId: null
+                }
+            },
+            computed: {
+                // 计算属性，当函数中的数值发生变化，可以返回一个新的值
+                selectedNote(){
+                    return this.notes.find(note => note.id === this.selectedId)
+                },
+                notePreview(){
+                    return this.selectedNote ? marked(this.selectedNote.content) : ''
+                    // marked('## title') --> <h2>title</h2>
+                }
+            },
+            watch: {
+                // 侦听改变 当数值发生变化时 返回被监听属性的新值与旧值
+                // watch以键值对存在 把侦听属性的名字作为key,把侦听选项对象作为value
+                // 必须有一个handler(newVal, oldVal);
+                content: {
+                    // handler(newVal, oldVal){
+                    //     console.log('save note:', newVal);
+                    // }
+                    // handler: 'saveNote'
+                }
+            },
+            methods: {
+                // saveNote(newVal){
+                //     // console.log('save note:', newVal);
+                //     localStorage.setItem('content', newVal);
+                // },
+                addNote(){
+                    const time = Date.now();//1970到现在的毫秒数 Type is Number
+                    const note = {
+                        id: String(time),
+                        title: 'New note' + (this.notes.length + 1),
+                        content: '**Hi** This notebook is using [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) for formatting',
+                        created: time,
+                        favorite: false
+                    }
+                    this.notes.push(note);
+                    // console.log(this.notes);
+                    // this.selectNote(note)
+                },
+                selectNote(note){
+                    this.selectedId = note.id;
+                    console.log(this.selectedId, this.selectedNote);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

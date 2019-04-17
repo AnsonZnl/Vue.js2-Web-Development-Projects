@@ -1,0 +1,68 @@
+body,html{
+    margin: 0;
+    padding: 0;
+}
+.clearfix::before,
+.clearfix::after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+input,button,select,textarea{
+    outline:none
+}
+textarea{
+    resize:none;
+    border: 0;
+    border-right: 1px solid #d9d9d9;
+}
+
+.main{
+    width: 80%;
+    margin-left: -2px;
+    display: -webkit-flex;
+    display: flex;
+}
+.inputView,.preView{
+    flex-grow: 1;
+    width: 50%;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 20px;
+}
+.preView{
+    background-color: #fcfaf2;
+}
+.side-bar{
+    height: 100vh;
+    width: 20%;
+    background: #f3f3f3;
+    border-right: 1px solid #d9d9d9;
+}
+.toolbar{
+    padding-top: 30px;
+    margin-bottom: 3px;
+    text-align: center;
+}
+.toolbar button{
+    width: 100px;
+    height: 30px;
+    background: #8890a0;
+    color: #fff;
+    cursor: pointer;
+    border-radius:3px;
+}
+.note-list{
+    text-align: center;
+    cursor: pointer;
+}
+.note-list div{
+    padding: 3px 0;
+}
