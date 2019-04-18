@@ -1,6 +1,10 @@
-body,html{
+
+*{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+
 }
 .clearfix::before,
 .clearfix::after{
@@ -18,11 +22,26 @@ input,button,select,textarea{
     outline:none
 }
 textarea{
+    width: 100%;
+    height: 100%;
+    padding-top:15px;    
     resize:none;
     border: 0;
-    border-right: 1px solid #d9d9d9;
+    font-size: 20px;
 }
-
+.global-button{
+    width: 35px;
+    height: 34px;
+    text-align: center;
+    background: #8890a0;
+    font-size: 18px;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+}
+.global-button i{
+    font-size: 18px;
+}
 .main{
     width: 80%;
     margin-left: -2px;
@@ -32,15 +51,20 @@ textarea{
 .inputView,.preView{
     flex-grow: 1;
     width: 50%;
+    min-width: 200px;
     height: 100vh;
-    box-sizing: border-box;
     padding: 20px;
     font-size: 20px;
+}
+.inputView{
+    overflow:hidden;
+    border-right: 1px solid #d9d9d9;
 }
 .preView{
     background-color: #fcfaf2;
 }
 .side-bar{
+    min-width: 130px;
     height: 100vh;
     width: 20%;
     background: #f3f3f3;
@@ -52,17 +76,52 @@ textarea{
     text-align: center;
 }
 .toolbar button{
-    width: 100px;
-    height: 30px;
+    width: 130px;
+    height: 40px;
     background: #8890a0;
     color: #fff;
     cursor: pointer;
     border-radius:3px;
+    font-size: 21px;
 }
 .note-list{
-    text-align: center;
+    text-align: left;
+}
+.note-list .note{
+    padding: 11px 24px;
+    font-size: 20px;
     cursor: pointer;
 }
-.note-list div{
-    padding: 3px 0;
+.note-list .note:hover{
+    background: #e2e2e2;
+}
+.note-list .selected{
+    background: #c7c7c7;
+}
+.note-list .selected:hover{
+    background: #c7c7c7;
+}
+.input-view-toolbar{
+    padding-top: 10px;
+}
+.input-view-toolbar input{
+    width:250px;
+    height: 40px;
+    border:solid 1px #ccc;
+    border-radius:3px;
+    padding: 3px;
+    text-indent: 5px;
+    font-size: 20px;
+    background: #f3f3f3;
+}
+.show-collection{
+    width: 40px;
+    height: 38px;
+    display: inline-block;
+    line-height: 39px;
+    margin-left: 10px;
+}
+.bottom-status-bar{
+    position:fixed;
+    bottom:20px;
 }

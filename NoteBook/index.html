@@ -6,86 +6,81 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>NoteBook</title>
     <link rel="stylesheet" href="style.css">
+    <link href="http://at.alicdn.com/t/font_797432_5pwlpvfkx2t.css" rel="stylesheet">
 </head>
 <body>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/marked"></script>
 <script src="https://unpkg.com/moment"></script>
-    <div id="notebook" class="clearfix">
+
+<div id="notebook" class="clearfix">
         <!-- 侧边栏 note list -->
         <aside class="side-bar fl">
             <div class="toolbar">
                 <button @click='addNote' :title="notes.length + ' note(s) already'"> + Add note</button>
+                <span class="global-button show-collection" @click='showCollection' title="show collection">
+                    <i :class="{iconfont: true, 'icon-collection': !isCollection , 'icon-collection-fill': isCollection}"></i>
+                </span>
             </div>
-            <div class="note-list">
-                <div v-for="note in notes" @click="selectNote(note)">
+            <div class="note-list"> 
+                <div
+                v-for="note in notes"
+                v-show="note.showNote"
+                @click="selectNote(note)" 
+                :class="{note: true ,selected: note === selectedNote}">
                     <span>{{note.title}}</span>
+                    <span class="fr">
+                        <i :class="{iconfont: note.favorite, 'icon-collection-fill': note.favorite}"></i>
+                    </span>
                 </div>
             </div>
         </aside>
         <!-- 主面板 -->
         <section class="main fl">
             <template v-if="selectedNote">
-                <textarea class="inputView" v-model="selectedNote.content"></textarea>
-                <aside class="preView" v-html="notePreview"></aside>
+                <div class="inputView">
+                    <div class="input-view-toolbar">
+                        <input v-model="selectedNote.title">
+                        <button 
+                        class="global-button" 
+                        title="Collection note"
+                        @click="favoriteNote"
+                        >
+                            <i :class="{
+                                iconfont: true,
+                                'icon-collection': !selectedNote.favorite,
+                                'icon-collection-fill': selectedNote.favorite
+                            }"></i>    
+                        </button>
+                        <button
+                        class="global-button"  
+                        title="Delete note"
+                        @click="deleteNote"
+                        >
+                            <i class="iconfont icon-delete-fill"></i>    
+                        </button>
+                    </div>
+                    <textarea v-model="selectedNote.content"></textarea>
+                </div>
+                <div class="preView">
+                    <strong v-html="selectedNote.title"></strong>
+                    <aside v-html="notePreview"></aside>
+                    <div class="bottom-status-bar">
+                        <span>
+                            Created: {{selectedNote.created}}
+                        </span>
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
+                        <span>
+                            WordsCount: {{WordsCount}}
+                        </span>
+                    </div>
+                </div>
             </template>
         </section>
     </div>
-    <script>
-        new Vue({
-            name: 'notebook',
-            el: '#notebook',
-            data(){
-                return {
-                    notes: [],
-                    selectedId: null
-                }
-            },
-            computed: {
-                // 计算属性，当函数中的数值发生变化，可以返回一个新的值
-                selectedNote(){
-                    return this.notes.find(note => note.id === this.selectedId)
-                },
-                notePreview(){
-                    return this.selectedNote ? marked(this.selectedNote.content) : ''
-                    // marked('## title') --> <h2>title</h2>
-                }
-            },
-            watch: {
-                // 侦听改变 当数值发生变化时 返回被监听属性的新值与旧值
-                // watch以键值对存在 把侦听属性的名字作为key,把侦听选项对象作为value
-                // 必须有一个handler(newVal, oldVal);
-                content: {
-                    // handler(newVal, oldVal){
-                    //     console.log('save note:', newVal);
-                    // }
-                    // handler: 'saveNote'
-                }
-            },
-            methods: {
-                // saveNote(newVal){
-                //     // console.log('save note:', newVal);
-                //     localStorage.setItem('content', newVal);
-                // },
-                addNote(){
-                    const time = Date.now();//1970到现在的毫秒数 Type is Number
-                    const note = {
-                        id: String(time),
-                        title: 'New note' + (this.notes.length + 1),
-                        content: '**Hi** This notebook is using [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) for formatting',
-                        created: time,
-                        favorite: false
-                    }
-                    this.notes.push(note);
-                    // console.log(this.notes);
-                    // this.selectNote(note)
-                },
-                selectNote(note){
-                    this.selectedId = note.id;
-                    console.log(this.selectedId, this.selectedNote);
-                }
-            }
-        })
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
