@@ -12,7 +12,6 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/marked"></script>
 <script src="https://unpkg.com/moment"></script>
-
 <div id="notebook" class="clearfix">
         <!-- 侧边栏 note list -->
         <aside class="side-bar fl">
@@ -28,7 +27,7 @@
                 v-show="note.showNote"
                 @click="selectNote(note)" 
                 :class="{note: true ,selected: note === selectedNote}">
-                    <span>{{note.title}}</span>
+                    <span v-cloak>{{note.title}}</span>
                     <span class="fr">
                         <i :class="{iconfont: note.favorite, 'icon-collection-fill': note.favorite}"></i>
                     </span>

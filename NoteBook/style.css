@@ -6,6 +6,9 @@
     font-family: -apple-system,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
 
 }
+[v-cloak] {
+    display: none;
+}
 .clearfix::before,
 .clearfix::after{
     content: '';
@@ -69,6 +72,10 @@ textarea{
     width: 20%;
     background: #f3f3f3;
     border-right: 1px solid #d9d9d9;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 }
 .toolbar{
     padding-top: 30px;

@@ -6,7 +6,7 @@ new Vue({
         return {
             notes: JSON.parse(localStorage.getItem('notes')) || [],
             selectedId: localStorage.getItem('selected-id') || null,
-            isCollection: localStorage.getItem('isCollection') || false
+            isCollection: JSON.parse(localStorage.getItem('isCollection')) || false
         }
     },
     computed: {
@@ -51,10 +51,10 @@ new Vue({
             var createdTiem = new Date();
             const note = {
                 id: String(time),
-                title: createdTiem.getFullYear()+'-'+(createdTiem.getMonth()+1)+'-'+createdTiem.getDate(),
+                title: createdTiem.getFullYear()+'-'+ this.fix((createdTiem.getMonth()+1), 2) +'-'+ this.fix(createdTiem.getDate(), 2),
                 content: '**Hi!** The notebook is '  + (this.notes.length + 1),
-                created: createdTiem.getFullYear()+'/'+(createdTiem.getMonth()+1)+'/'+createdTiem.getDate() + '  ' + createdTiem.getHours() + ':' + createdTiem.getMinutes() + ':'+createdTiem.getSeconds(),
-                favorite: false,
+                created: createdTiem.getFullYear()+'/'+ this.fix((createdTiem.getMonth()+1), 2) +'/'+ this.fix(createdTiem.getDate(), 2) + '  ' + this.fix(createdTiem.getHours(), 2) + ':' + createdTiem.getMinutes() + ':'+ createdTiem.getSeconds(),
+                favorite: this.isCollection,
                 showNote: true
             }
             this.notes.push(note);
@@ -70,6 +70,10 @@ new Vue({
                 var index = this.notes.indexOf(this.selectedNote);
                 if(index !== -1){
                     this.notes.splice(index, 1);
+                    if(this.notes){
+                        localStorage.setItem('selected-id', this.notes[0].id);
+                        this.selectedId = this.notes[0].id
+                    }
                 }
             }
         },
@@ -89,6 +93,10 @@ new Vue({
                 }
             }
             console.log(this.isCollection);
-        }
+        },
+        fix(num, length) {
+            return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
+          }
+          
     }
 })
