@@ -9,6 +9,18 @@
 [v-cloak] {
     display: none;
 }
+body::-webkit-scrollbar {
+    display: none;
+}
+div::-webkit-scrollbar {
+    display: none;
+}
+textarea::-webkit-scrollbar {
+    display: none;
+}
+aside::-webkit-scrollbar {
+    display: none;
+}
 .clearfix::before,
 .clearfix::after{
     content: '';
@@ -27,7 +39,7 @@ input,button,select,textarea{
 textarea{
     width: 100%;
     height: 100%;
-    padding-top:15px;    
+    padding-top:60px;    
     resize:none;
     border: 0;
     font-size: 20px;
@@ -60,12 +72,15 @@ textarea{
     font-size: 20px;
 }
 .inputView{
+    position: relative;
     overflow:hidden;
     border-right: 1px solid #d9d9d9;
 }
 .preView{
+    position: relative;
     background-color: #fcfaf2;
 }
+
 .side-bar{
     min-width: 130px;
     height: 100vh;
@@ -81,6 +96,13 @@ textarea{
     padding-top: 30px;
     margin-bottom: 3px;
     text-align: center;
+    background: #f3f3f3;
+    position:fixed;
+    top: 0;    
+    left: 20px;
+    background: #f3f3f3;
+    width: 20%;
+    margin-left: -20px;
 }
 .toolbar button{
     width: 130px;
@@ -92,7 +114,12 @@ textarea{
     font-size: 21px;
 }
 .note-list{
+    padding-top: 70px;
     text-align: left;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-bottom: -100px;
 }
 .note-list .note{
     padding: 11px 24px;
@@ -107,9 +134,6 @@ textarea{
 }
 .note-list .selected:hover{
     background: #c7c7c7;
-}
-.input-view-toolbar{
-    padding-top: 10px;
 }
 .input-view-toolbar input{
     width:250px;
@@ -129,6 +153,33 @@ textarea{
     margin-left: 10px;
 }
 .bottom-status-bar{
-    position:fixed;
+    position: absolute;;
     bottom:20px;
+    background: #fdfbf5;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 5px;
+}
+.notePreView{
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    padding-top: 50px;
+    padding-bottom: 33px;
+}
+.preViewTitle{
+    position: absolute;
+    top: 20px;
+    display: block;
+    padding: 15px 0;
+    background: #fdfbf5;
+    width: 100%;
+}
+.input-view-toolbar{
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    padding-bottom: 10px;
+    background: #fff;
 }
